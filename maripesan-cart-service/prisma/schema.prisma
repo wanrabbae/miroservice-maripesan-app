@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Cart {
+  @@map("carts")
+  id        Int @id @default(autoincrement())
+  userId    String
+  restaurantId Int
+  process  String
+  type     Type?
+  dineTime DateTime?
+  notes String? @db.Text
+  cartDetails CartDetail[]
+  cartShares CartShares[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Type {
+  dinein
+  takeaway
+}
+
+model CartDetail {
+  @@map("cart_details")
+  id        Int @id @default(autoincrement())
+  cart      Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    Int 
+  userId    String
+  menuId    Int
+  quantity  Int @default(1)
+  notes      String? @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, menuId, userId])
+}
+
+model CartShares {
+  @@map("cart_shares")
+  id Int @id @default(autoincrement())
+  cart Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId Int
+  activeLimit DateTime
+  paymentType String
+}

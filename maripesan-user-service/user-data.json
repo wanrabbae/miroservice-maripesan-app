@@ -1,0 +1,20 @@
+{
+    "iss": "https://securetoken.google.com/my-awesome-project",
+    "aud": "my-awesome-project",
+    "auth_time": 1653207862,
+    "user_id": "cl3in72vt0000u0va95f2b6kf",
+    "sub": "cl3in72vt0000u0va95f2b6kf",
+    "iat": 1653207862,
+    "exp": 1653211462,
+    "email": "john@email.com",
+    "email_verified": false,
+    "firebase": {
+        "identities": {
+            "email": [
+                "john@email.com"
+            ]
+        },
+        "sign_in_provider": "password"
+    },
+    "key": "ewogICAgImlzcyI6ICJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vc3ktYXBpZ2F0ZXdheS10ZXN0IiwKICAgICJhdWQiOiAic3ktYXBpZ2F0ZXdheS10ZXN0IiwKICAgICJhdXRoX3RpbWUiOiAxNjUzMjA3ODYyLAogICAgInVzZXJfaWQiOiAiY2wzaW43MnZ0MDAwMHUwdmE5NWYyYjZrZiIsCiAgICAic3ViIjogImNsM2luNzJ2dDAwMDB1MHZhOTVmMmI2a2YiLAogICAgImlhdCI6IDE2NTMyMDc4NjIsCiAgICAiZXhwIjogMTY1MzIxMTQ2MiwKICAgICJlbWFpbCI6ICJqb2huQGVtYWlsLmNvbSIsCiAgICAiZW1haWxfdmVyaWZpZWQiOiBmYWxzZSwKICAgICJmaXJlYmFzZSI6IHsKICAgICAgICAiaWRlbnRpdGllcyI6IHsKICAgICAgICAgICAgImVtYWlsIjogWwogICAgICAgICAgICAgICAgImpvaG5AZW1haWwuY29tIgogICAgICAgICAgICBdCiAgICAgICAgfSwKICAgICAgICAic2lnbl9pbl9wcm92aWRlciI6ICJwYXNzd29yZCIKICAgIH0KfQ"
+}

@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Type {
+  dinein
+  takeaway
+}
+
+enum Status {
+  Unpaid
+  Paid
+  Waiting
+  Aceppted
+  Finished
+  Cancelled
+}
+
+model Order {
+  @@map("order")
+  id Int @id @default(autoincrement())
+  userId String
+  restaurantId Int
+  voucherCode String
+  voucherValue Int
+  total Int
+  type Type
+  notes String
+  status Status
+  metadata Json @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orderDetails OrderDetail[]
+  payment Payment[]
+}
+
+model OrderDetail {
+  @@map("order_detail")
+  id Int @id @default(autoincrement())
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int
+  userId String
+  menuId Int
+  quantity Int?
+  notes String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+  @@map("payment")
+  id Int @id @default(autoincrement())
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int
+  userId String
+  invoiceId String
+  total Int
+  expiredTime DateTime
+  status String
+  uid String @default("")
+  metadata Json @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

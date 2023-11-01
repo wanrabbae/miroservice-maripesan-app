@@ -1,0 +1,40 @@
+{
+  "name": "maripesan-cart-service",
+  "version": "1.0.0",
+  "description": "Maripesan Cart Service API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elnco-cloud/maripesan-cart-service.git"
+  },
+  "author": "Elnco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elnco-cloud/maripesan-cart-service/issues"
+  },
+  "homepage": "https://github.com/elnco-cloud/maripesan-cart-service#readme",
+  "dependencies": {
+    "@prisma/client": "^3.14.0",
+    "axios": "^0.27.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.0",
+    "google-auth-library": "^8.0.2",
+    "http-errors": "^2.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "prisma": "^3.14.0"
+  }
+}

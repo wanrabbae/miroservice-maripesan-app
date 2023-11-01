@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Voucher {
+  @@map("vouchers")
+  id          Int @id @default(autoincrement())
+  restaurantId     Int
+  name        String
+  code        String
+  type        Type @default(percent)
+  value       Int
+  minTransaction   Int
+  maxReduction     Int
+  quota             Int
+  expired     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Type {
+  percent
+  amount
+}
+
+model Tag {
+  @@map("tags")
+  id          Int @id @default(autoincrement())
+  tag         String
+  imageUrl   String
+  expired     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  restaurantTags RestaurantTag[]
+}
+
+model RestaurantTag {
+  @@map("restaurant_tags")
+  id          Int @id @default(autoincrement())
+  restaurantId        String
+  tag          Tag @relation(fields: [tagId],references: [id], onDelete: Cascade)
+  tagId       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Banner {
+  @@map("banners")
+  id          Int @id @default(autoincrement())
+  imageUrl   String
+  number      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Bank {
+  @@map("banks")
+  id          Int @id @default(autoincrement())
+  name        String
+  imageUrl   String
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BufferGlobal {
+  @@map("buffer_global")
+  id          Int @id @default(autoincrement())
+  bufferGlobal        Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model WithdrawCut {
+  @@map("withdraw_cut")
+  id          Int @id @default(autoincrement())
+  percentageCut        Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model RestaurantCategories {
+  @@map("restaurant_categories")
+  id Int @id @default(autoincrement())
+  category String @unique
+  imageUrl String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+  restaurants Restaurants[]
+}
+
+model Restaurants {
+  @@map("restaurants")
+  id Int @id @default(autoincrement())
+  restaurantCategory RestaurantCategories? @relation(fields: [restaurantCategoryId], references: [id])
+  restaurantCategoryId Int?
+  userId String?
+  name String
+  address String?
+  thumbnail String
+  description String? @db.Text
+  balance Int @default(0)
+  active Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+  menuCategories MenuCategories[]
+  schedules Schedules[]
+  restaurantPhotos RestaurantPhotos[]
+  withdraws Withdraws[]
+}
+
+model MenuCategories {
+  @@map("menu_categories")
+  id Int @id @default(autoincrement())
+  restaurant Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int
+  category String
+  number Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+  menus Menus[]
+}
+
+model Menus {
+  @@map("menus")
+  id Int @id @default(autoincrement())
+  menuCategory MenuCategories @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
+  menuCategoryId Int
+  name String
+  thumbnail String?
+  price Int
+  description String? @db.Text
+  stok Int
+  buffer Int
+  active Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+model Schedules {
+  @@map("schedules")
+  id Int @id @default(autoincrement())
+  restaurant Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int
+  day String
+  open String
+  close String
+  isOpen Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+model RestaurantPhotos {
+  @@map("restaurant_photos")
+  id Int @id @default(autoincrement())
+  restaurant Restaurants? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int?
+  photoUrl String?
+  number Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+enum StatusWithdraw {
+  Pending
+  Succeed
+  Failed
+}
+
+model Withdraws {
+  @@map("withdraws")
+  id Int @id @default(autoincrement())
+  restaurant Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int
+  amount Int
+  status StatusWithdraw @default(Pending)
+  bank String
+  accountName String
+  accountNumber String
+  imageUrl String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt @default(now())
+}
